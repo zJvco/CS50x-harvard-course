@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+    </head>
+    <body>
+
+        <div class="jumbotron">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+
+                <!-- TODO: Add multiple choice question here -->
+                <h3 id="multiple-question"></h3>
+                <button class="multiple-btn" id="a"></button>
+                <button class="multiple-btn" id="b"></button>
+                <button class="multiple-btn" id="c"></button>
+                <button class="multiple-btn" id="d"></button>
+                <button class="multiple-btn" id="e"></button>
+                <span id="multiple-alert"></span>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+
+                <!-- TODO: Add free response question here -->
+                <h3 id="free-question"></h3>
+                <input type="text" id="free-answer-input">
+                <button id="free-check-input">Check Answer</button>
+                <span id="free-alert"></span>
+            </div>
+
+        </div>
+
+        <script>
+
+            // TODO: Add code to check answers to questions
+            const questions = {
+                "multiple": [
+                    {"question": "What is the most famous food in Brazil?", "a": "Macarrão", "b": "Hamburguer", "c": "Bife", "d": "Feijoada", "e": "Hot Dog", "correct": "d"},
+                    {"question": "What is the most popular soccer player of Brazil?", "a": "Neymar", "b": "Mbappé", "c": "Cristiano Ronaldo", "d": "Messi", "e": "Daniel Alves", "correct": "a"},
+                    {"question": "What is the most popular programming language of 2021? (According to https://www.tiobe.com/tiobe-index)", "a": "Java", "b": "C", "c": "PHP", "d": "Javascript", "e": "Python", "correct": "e"}
+                ],
+                "free": [
+                    {"question": "How can I print \"Hello World\" in Python?", "correct": "print(\"Hello World\")"},
+                    {"question": "What is the answer of this equation: ((2 + 10) * 2) / 4", "correct": "6"}
+                ]
+            }
+
+            var currentMultipleQuestion = 0;
+            var currentFreeQuestion = 0;
+
+            function loadMultipleQuestion() {
+                // Multiple choice question to load
+                const questionTag = document.getElementById("multiple-question");
+                questionTag.innerText = questions["multiple"][currentMultipleQuestion]["question"];
+
+                const answerTags = document.querySelectorAll(".multiple-btn");
+                answerTags.forEach(element => {
+                    element.innerText = questions["multiple"][currentMultipleQuestion][element.id];
+                });
+            }
+
+            function loadFreeQuestion() {
+                // Free response question to load
+                const questionTag = document.getElementById("free-question");
+                questionTag.innerText = questions["free"][currentFreeQuestion]["question"];
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                loadMultipleQuestion();
+                loadFreeQuestion();
+            });
+
+            // Multiple choiche question
+            const ansBtns = document.querySelectorAll(".multiple-btn");
+            ansBtns.forEach(element => {
+                element.addEventListener("click", (e) => {
+                    const receivedAnswer = element.id;
+                    const correctAnswer = questions["multiple"][currentMultipleQuestion]["correct"];
+                    const multipleAlert = document.getElementById("multiple-alert");
+                    if (receivedAnswer == correctAnswer) {
+                        // Correct Answer
+                        multipleAlert.innerText = "Correct";
+                        element.style.backgroundColor = "#1ABC9C";
+                    }
+                    else {
+                        // Incorrect Answer
+                        multipleAlert.innerText = "Incorrect";
+                        element.style.backgroundColor = "#E74C3C";
+                    }
+                    // Next question index
+                    currentMultipleQuestion++;
+                    if (currentMultipleQuestion >= questions["multiple"].length) {
+                        currentMultipleQuestion = 0;
+                    }
+                    // Reset question
+                    setTimeout(() => {
+                        multipleAlert.innerText = "";
+                        element.style.backgroundColor = "#d9edff";
+                        loadMultipleQuestion();
+                    }, 1000)
+                })
+            })
+
+            // Free response question
+            const checkBtn = document.getElementById("free-check-input");
+            checkBtn.addEventListener("click", () => {
+                const inputAns = document.getElementById("free-answer-input");
+                const correctAnswer = questions["free"][currentFreeQuestion]["correct"];
+                const freeAlert = document.getElementById("free-alert");
+                if (inputAns.value == correctAnswer) {
+                    freeAlert.innerText = "Correct";
+                    inputAns.style.backgroundColor = "#1ABC9C";
+                }
+                else {
+                    freeAlert.innerText = "Incorrect";
+                    inputAns.style.backgroundColor = "#E74C3C";
+                }
+                // Next question index
+                currentFreeQuestion++;
+                if (currentFreeQuestion >= questions["free"].length) {
+                    currentFreeQuestion = 0;
+                }
+                // Reset question
+                setTimeout(() => {
+                    freeAlert.innerText = "";
+                    inputAns.value = "";
+                    inputAns.style.backgroundColor = "#fff";
+                    loadFreeQuestion();
+                }, 1000)
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,11 @@
+sort1 uses: Bubble Sort
+
+How do you know?: The Bubble Sort algorithm is worse than Selection Sort algorithm, it take more time to run because it compare 2 elements.
+
+sort2 uses: Merge Sort
+
+How do you know?: This algorithm is faster than others, it take less time to run.
+
+sort3 uses: Selection Sort
+
+How do you know?: The Selection Sort algorithm is better than Bubble Sort algorithm, becausa selection sort uses smaller numbers to compare.
